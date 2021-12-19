@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        th,
+        td,
+        tr {
+            border: 1px solid rgb(88, 63, 63);
+            border-radius: 2px;
+            background-color: beige
+        }
+        table {
+            background-color: rgb(196, 195, 135);
+        }
+    </style>
+</head>
+
+<body>
+
+    <table id="table">
+        <thead>
+            Data fetched from API
+        </thead>
+        <tbody>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Color</th>
+            <th>Pantone Value</th>
+        </tbody>
+    </table>
+    <script>
+        let r = fetch('https://reqres.in/api/user');
+
+        let s = r.then(function (response) {
+            return response.json();
+        });
+
+        s.then(function (a) {
+            console.log("Then: ", a);
+            displayData(a.data);
+        });
+
+
+        function displayData(data) {
+            console.log("disp data:", data);
+            data.forEach(function (element) {
+                console.log("ele: ", element.pantone_value);
+                let new_row = document.createElement('tr');
+                let table_body = document.querySelector('tbody');
+                table_body.appendChild(new_row);
+
+                let td1 = document.createElement('td');
+                td1.innerHTML = element.id
+                let td2 = document.createElement('td');
+                td2.innerHTML = element.name
+                let td3 = document.createElement('td');
+                td3.innerHTML = element.year
+                let td4 = document.createElement('td');
+                let span = document.createElement('span');
+                span.innerHTML = element.color
+                span.style.backgroundColor = element.color;
+                td4.append(span);
+                let td5 = document.createElement('td');
+                td5.innerHTML = element.pantone_value;
+
+                new_row.appendChild(td1);
+                new_row.appendChild(td2);
+                new_row.appendChild(td3);
+                new_row.appendChild(td4);
+                new_row.appendChild(td5);
+
+            });
+        }
+    </script>
+</body>
+
+</html>
